@@ -39,8 +39,15 @@ const Login = () => {
       setUser(res.data);
       navigate("/");
     } catch (err) {
+      if (err.response && err.response.status === 404) {
+      // Handle 404 error (resource not found)
+      console.log("Resource not found. Redirecting to login page.");
+      navigate("/login");
+    } else {
+      // Handle other errors
       setError(true);
       console.error("Login Error:", err);
+    }
     }
   };
 
