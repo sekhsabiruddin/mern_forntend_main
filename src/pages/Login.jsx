@@ -24,7 +24,7 @@ const Login = () => {
       console.log("No User ");
        navigate("/");
     }
-  }, [user, navigate]);
+  }, []);
 
   const handleLogin = async () => {
     if (!password || !email) {
