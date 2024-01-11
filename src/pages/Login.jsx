@@ -22,7 +22,7 @@ const Login = () => {
       navigate("/");
     } else {
       console.log("No User ");
-       navigate("/");
+       navigate("/login");
     }
   }, []);
 
