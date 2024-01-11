@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -8,14 +8,28 @@ import { URL } from "../../url";
 import { UserContext } from "../context/Usercontext";
 
 const Login = () => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Check if the user is already authenticated
+    if (user) {
+      console.log("User ");
+      navigate("/");
+    } else {
+      console.log("No User ");
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   const handleLogin = async () => {
+    if (!password || !email) {
+      return;
+    }
     try {
       const res = await axios.post(
         URL + "/api/auth/login",
